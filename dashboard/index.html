@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — radar-6</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="radar-mark" aria-hidden="true"><span></span></div>
+    <div>
+      <h1>TOKEN RADAR <span class="ver">radar-6</span></h1>
+      <p class="tagline">Which pre-token protocol is worth farming next — and what to do about it.</p>
+    </div>
+  </div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<section class="stats" id="stats" aria-label="Board summary"></section>
+
+<nav class="scopes" id="scopes" aria-label="Board scope"></nav>
+
+<section class="controls">
+  <input id="search" type="search" placeholder="Search name or slug…" aria-label="Search protocols">
+  <select id="category" aria-label="Filter by category"><option value="">All categories</option></select>
+  <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+  <span class="count" id="count"></span>
+</section>
+
+<main>
+  <table class="board" id="board">
+    <thead><tr>
+      <th data-sort="rank" class="num">#</th>
+      <th data-sort="name">Protocol</th>
+      <th data-sort="category">Category</th>
+      <th data-sort="chains">Chains</th>
+      <th data-sort="tvl_usd" class="num">TVL</th>
+      <th data-sort="change_7d" class="num">7d</th>
+      <th data-sort="implied_value_usd" class="num">Implied value</th>
+      <th data-sort="multiple" class="num">Multiple</th>
+      <th data-sort="age_days" class="num">Age</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="hint">Click any row for its full value breakdown and farm plan. Implied value is this radar's own model, never a promise — and never a prediction of whether or when a token is issued.</p>
+
+  <section class="model" id="model">
+    <h2>How radar-6 prices a launch</h2>
+    <p>Every implied value starts from the protocol's own TVL times its category's live-market multiple — the geometric median market-cap / TVL ratio of the snapshot's live-token protocols in that category, shrunk in log space toward the global median by sample size, clamped to 0.08–0.60. Fourteen factors then adjust it: the week's momentum (up counts less than down), the week's percentile inside its own category, the live tokens' median week in the sector, a stability discount for wild weeks, a credibility curve that peaks near 2.5 years, TVL velocity as a percentile inside the category, log scale, chain breadth, chain quality, category leadership, the week's real dollar flow, a discount for missing data, and the tier discount (70% for a versioned deployment, 60% for a staked or bridged product). No protocol name is ever special-cased.</p>
+    <p>The board has four tiers. <b>Watchlist</b> is the house's floor: at least $50M of TVL, no token on record, not a wrapped, staked or bridged product of a token that already trades. <b>Early radar</b> is the same rule below the floor. <b>Product</b> rows are staked or bridged products whose underlying token already trades — ranked, discounted and badged, never hidden. <b>Deployment</b> rows are a V2 or V3 of a pre-token protocol: farm the deployment itself. Exchanges stay off the board, and so do the above-floor protocols the watchlist leaves out, because the house excludes them for a parent protocol the snapshot does not carry.</p>
+    <h3>Category multiples, priced by the live market</h3>
+    <table class="multiples" id="multiples">
+      <thead><tr><th>Category</th><th class="num">Multiple</th><th class="num">Live priced</th><th>Confidence</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="live" id="live">
+    <h2>Already trading — set aside, never ranked</h2>
+    <p>These protocols record a token with a market cap, so the market has already priced them. They are shown at the market's own value and never mixed into the ranked board.</p>
+    <table class="multiples" id="livetable">
+      <thead><tr><th>Protocol</th><th>Category</th><th class="num">Market cap</th><th class="num">TVL</th><th class="num">7d</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<aside class="drawer" id="drawer" aria-label="Protocol detail" hidden>
+  <button class="close" id="drawerClose" aria-label="Close detail">×</button>
+  <div id="detail"></div>
+</aside>
+
+<footer>
+  <p>Data: DefiLlama protocol snapshot, sealed at the competition's input. A protocol "records no token" in the snapshot; the record is not proof it has none. Implied values are this entry's own claim. Built for the make.fun token-radar-01 bounty.</p>
+</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
